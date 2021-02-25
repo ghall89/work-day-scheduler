@@ -38,6 +38,11 @@ var eventsArr = [{
 	}
 ];
 
+function currentDate() {
+	date = moment().format("dddd, MMMM Do");
+	$("#currentDay").text(date);
+}
+
 function drawHours() {
 
 	for (let i = 0; i < eventsArr.length; i++) {
@@ -71,4 +76,5 @@ function checkTime() {
 	console.log(now);
 }
 
+currentDate();
 drawHours();

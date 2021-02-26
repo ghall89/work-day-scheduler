@@ -1,6 +1,6 @@
-var containerEl = $(".container");
+let containerEl = $(".container");
 
-var eventsArr = [{
+let eventsArr = [{
 		time: moment()
 			.hour(9),
 		event: ""
@@ -57,20 +57,20 @@ function currentDate() {
 function drawHours() {
 
 	for (let i = 0; i < eventsArr.length; i++) {
-		var timeBlockEl = $("<div>")
+		let timeBlockEl = $("<div>")
 			.addClass("time-block");
-		var rowEl = $("<div>")
+		let rowEl = $("<div>")
 			.addClass("row");
-		var hourEl = $("<div>")
+		let hourEl = $("<div>")
 			.addClass("hour col-1")
 			.text(moment(eventsArr[i]
 				.time)
 				.format("hA"));
-		var eventEl = $("<div>")
+		let eventEl = $("<div>")
 			.addClass("event col-10");
-		var textAreaEl = $("<textarea>")
+		let textAreaEl = $("<textarea>")
 			.text(eventsArr[i].event);
-		var saveBtnEl = $("<button>")
+		let saveBtnEl = $("<button>")
 			.addClass("saveBtn col-1")
 			.html("<i class='fas fa-inbox'></i>");
 
@@ -85,13 +85,12 @@ function drawHours() {
 
 function checkTime() {
 	let now = moment()
-		.format("hA");
+		.format("HH");
 	console.log(now);
 
 	for (let i = 0; i < eventsArr.length; i++) {
-		let time = moment(eventsArr[i]
-			.time)
-			.format("hA");
+		let time = moment(eventsArr[i].time)
+			.format("HH");
 			
 		$event = $(".time-block")
 			.eq(i)
@@ -123,20 +122,20 @@ drawHours();
 // Event listeners
 
 containerEl.on("click", "textarea", function() {
-	var index = $(this)
+	let index = $(this)
 		.closest(".time-block")
 		.index();
 	console.log(index);
 });
 
 containerEl.on("click", "button", function() {
-	var index = $(this)
+	let index = $(this)
 		.closest(".time-block")
 		.index();
 
 	console.log(index);
 
 	// put in local storage
-	var data = JSON.stringify(eventsArr);
+	let data = JSON.stringify(eventsArr);
 	localStorage.setItem("today", data);
 });

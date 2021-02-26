@@ -10,19 +10,35 @@ function currentDate() {
 }
 
 function drawHours() {
-	
+
 	let hour = 9;
+	let savedEvents = localStorage.getItem("today");
+	let eventObj = {};
+	savedEvents = JSON.parse(savedEvents);
+	console.log(savedEvents);
 
 	for (let i = 0; i < 8; i++) {
-		
-		let eventObj = {
-			time: moment().hour(hour),
-			event: ""
-		};
-		
+
+		if (savedEvents == null) {
+			
+			eventObj = {
+				time: moment()
+					.hour(hour),
+				event: ""
+			};
+			
+		} else {
+
+				eventObj = {
+					time: moment()
+						.hour(hour),
+					event: savedEvents[i].event
+				};
+			}
+	
 		eventsArr.push(eventObj);
 		hour++;
-		
+
 		let timeBlockEl = $("<div>")
 			.addClass("time-block");
 		let rowEl = $("<div>")
@@ -30,7 +46,7 @@ function drawHours() {
 		let hourEl = $("<div>")
 			.addClass("hour col-1")
 			.text(moment(eventsArr[i]
-				.time)
+					.time)
 				.format("hA"));
 		let eventEl = $("<div>")
 			.addClass("event col-10");
@@ -47,6 +63,7 @@ function drawHours() {
 		eventEl.append(textAreaEl);
 	}
 	
+
 	checkTime();
 }
 
@@ -57,12 +74,12 @@ function checkTime() {
 	for (let i = 0; i < eventsArr.length; i++) {
 		let time = moment(eventsArr[i].time)
 			.format("HH");
-			
+
 		$event = $(".time-block")
 			.eq(i)
 			.children(".row")
 			.children(".event");
-		
+
 		if (now == time) {
 			$event.addClass("present");
 		} else if (time > now) {
@@ -72,7 +89,7 @@ function checkTime() {
 		}
 	}
 
-	
+
 }
 
 currentDate();
@@ -98,7 +115,7 @@ containerEl.on("click", "button", function() {
 	let i = $(this)
 		.closest(".time-block")
 		.index();
-		
+
 	eventsArr[i].event = eventText;
 
 	// put in local storage

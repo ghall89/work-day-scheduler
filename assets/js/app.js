@@ -1,46 +1,57 @@
 var containerEl = $(".container");
 
 var eventsArr = [{
-		time: "9AM",
+		time: moment()
+			.hour(9),
 		event: ""
 	},
 	{
-		time: "10AM",
+		time: moment()
+			.hour(10),
 		event: ""
 	},
 	{
-		time: "11AM",
+		time: moment()
+			.hour(11),
 		event: ""
 	},
 	{
-		time: "12PM",
+		time: moment()
+			.hour(12),
 		event: ""
 	},
 	{
-		time: "1PM",
+		time: moment()
+			.hour(13),
 		event: ""
 	},
 	{
-		time: "2PM",
+		time: moment()
+			.hour(14),
 		event: ""
 	},
 	{
-		time: "3PM",
+		time: moment()
+			.hour(15),
 		event: ""
 	},
 	{
-		time: "4PM",
+		time: moment()
+			.hour(16),
 		event: ""
 	},
 	{
-		time: "5PM",
+		time: moment()
+			.hour(17),
 		event: ""
 	}
 ];
 
 function currentDate() {
-	date = moment().format("dddd, MMMM Do");
-	$("#currentDay").text(date);
+	date = moment()
+		.format("dddd, MMMM Do");
+	$("#currentDay")
+		.text(date);
 }
 
 function drawHours() {
@@ -52,9 +63,11 @@ function drawHours() {
 			.addClass("row");
 		var hourEl = $("<div>")
 			.addClass("hour col-1")
-			.text(eventsArr[i].time);
+			.text(moment(eventsArr[i]
+				.time)
+				.format("hA"));
 		var eventEl = $("<div>")
-			.addClass("past col-10");
+			.addClass("event col-10");
 		var textAreaEl = $("<textarea>")
 			.text(eventsArr[i].event);
 		var saveBtnEl = $("<button>")
@@ -66,13 +79,42 @@ function drawHours() {
 		rowEl.append([hourEl, eventEl, saveBtnEl]);
 		eventEl.append(textAreaEl);
 	}
-
+	
+	checkTime();
 }
 
 function checkTime() {
-	now = moment()
-		.format("LT");
+	let now = moment()
+		.format("hA");
 	console.log(now);
+
+	for (let i = 0; i < eventsArr.length; i++) {
+		let time = moment(eventsArr[i]
+			.time)
+			.format("hA");
+			
+		$event = $(".time-block")
+			.eq(i)
+			.children(".row")
+			.children(".event");
+			
+		console.log($event);
+			
+		console.log(time);
+		
+		if (now == time) {
+			console.log(`${time} is now!`);
+			$event.addClass("present");
+		} else if (time > now) {
+			console.log(`${time} is in the future!`);
+			$event.addClass("future");
+		} else {
+			console.log(`${time} is in the past!`);
+			$event.addClass("past");
+		}
+	}
+
+
 }
 
 currentDate();
@@ -81,16 +123,20 @@ drawHours();
 // Event listeners
 
 containerEl.on("click", "textarea", function() {
-	var index = $(this).closest(".time-block").index();
+	var index = $(this)
+		.closest(".time-block")
+		.index();
 	console.log(index);
 });
 
 containerEl.on("click", "button", function() {
-	var index = $(this).closest(".time-block").index();
-	
+	var index = $(this)
+		.closest(".time-block")
+		.index();
+
 	console.log(index);
-	
+
 	// put in local storage
 	var data = JSON.stringify(eventsArr);
 	localStorage.setItem("today", data);
-})
+});

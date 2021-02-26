@@ -35,6 +35,7 @@ function drawHours() {
 		let eventEl = $("<div>")
 			.addClass("event col-10");
 		let textAreaEl = $("<textarea>")
+			.addClass("eventTxtArea")
 			.text(eventsArr[i].event);
 		let saveBtnEl = $("<button>")
 			.addClass("saveBtn col-1")
@@ -79,19 +80,26 @@ drawHours();
 
 // Event listeners
 
-containerEl.on("click", "textarea", function() {
-	let index = $(this)
-		.closest(".time-block")
-		.index();
-	console.log(index);
-});
+// containerEl.on("click", "textarea", function() {
+// 	let index = $(this)
+// 		.closest(".time-block")
+// 		.index();
+// 	console.log(index);
+// });
 
 containerEl.on("click", "button", function() {
-	let index = $(this)
+	let eventText = $(this)
+		.closest(".time-block")
+		.children(".row")
+		.children(".event")
+		.children(".eventTxtArea")
+		.val();
+
+	let i = $(this)
 		.closest(".time-block")
 		.index();
-
-	console.log(index);
+		
+	eventsArr[i].event = eventText;
 
 	// put in local storage
 	let data = JSON.stringify(eventsArr);

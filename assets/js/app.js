@@ -69,7 +69,6 @@ function drawHours() {
 
 }
 
-
 function checkTime() {
 	now = moment()
 		.format("LT");
@@ -78,3 +77,20 @@ function checkTime() {
 
 currentDate();
 drawHours();
+
+// Event listeners
+
+containerEl.on("click", "textarea", function() {
+	var index = $(this).closest(".time-block").index();
+	console.log(index);
+});
+
+containerEl.on("click", "button", function() {
+	var index = $(this).closest(".time-block").index();
+	
+	console.log(index);
+	
+	// put in local storage
+	var data = JSON.stringify(eventsArr);
+	localStorage.setItem("today", data);
+})

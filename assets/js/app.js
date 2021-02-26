@@ -1,51 +1,6 @@
 let containerEl = $(".container");
 
-let eventsArr = [{
-		time: moment()
-			.hour(9),
-		event: ""
-	},
-	{
-		time: moment()
-			.hour(10),
-		event: ""
-	},
-	{
-		time: moment()
-			.hour(11),
-		event: ""
-	},
-	{
-		time: moment()
-			.hour(12),
-		event: ""
-	},
-	{
-		time: moment()
-			.hour(13),
-		event: ""
-	},
-	{
-		time: moment()
-			.hour(14),
-		event: ""
-	},
-	{
-		time: moment()
-			.hour(15),
-		event: ""
-	},
-	{
-		time: moment()
-			.hour(16),
-		event: ""
-	},
-	{
-		time: moment()
-			.hour(17),
-		event: ""
-	}
-];
+let eventsArr = [];
 
 function currentDate() {
 	date = moment()
@@ -55,8 +10,19 @@ function currentDate() {
 }
 
 function drawHours() {
+	
+	let hour = 9;
 
-	for (let i = 0; i < eventsArr.length; i++) {
+	for (let i = 0; i < 8; i++) {
+		
+		let eventObj = {
+			time: moment().hour(hour),
+			event: ""
+		};
+		
+		eventsArr.push(eventObj);
+		hour++;
+		
 		let timeBlockEl = $("<div>")
 			.addClass("time-block");
 		let rowEl = $("<div>")
@@ -86,7 +52,6 @@ function drawHours() {
 function checkTime() {
 	let now = moment()
 		.format("HH");
-	console.log(now);
 
 	for (let i = 0; i < eventsArr.length; i++) {
 		let time = moment(eventsArr[i].time)
@@ -96,24 +61,17 @@ function checkTime() {
 			.eq(i)
 			.children(".row")
 			.children(".event");
-			
-		console.log($event);
-			
-		console.log(time);
 		
 		if (now == time) {
-			console.log(`${time} is now!`);
 			$event.addClass("present");
 		} else if (time > now) {
-			console.log(`${time} is in the future!`);
 			$event.addClass("future");
 		} else {
-			console.log(`${time} is in the past!`);
 			$event.addClass("past");
 		}
 	}
 
-
+	
 }
 
 currentDate();

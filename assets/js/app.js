@@ -15,7 +15,6 @@ function drawHours() {
 	let savedEvents = localStorage.getItem("today");
 	let eventObj = {};
 	savedEvents = JSON.parse(savedEvents);
-	console.log(savedEvents);
 
 	for (let i = 0; i < 8; i++) {
 
@@ -89,7 +88,6 @@ function checkTime() {
 		}
 	}
 
-
 }
 
 currentDate();
@@ -97,26 +95,24 @@ drawHours();
 
 // Event listeners
 
-// containerEl.on("click", "textarea", function() {
-// 	let index = $(this)
-// 		.closest(".time-block")
-// 		.index();
-// 	console.log(index);
-// });
+containerEl.on("change", "textarea", function() {
+	$(this).addClass("unsaved");
+})
 
 containerEl.on("click", "button", function() {
-	let eventText = $(this)
+	let $eventText = $(this)
 		.closest(".time-block")
 		.children(".row")
 		.children(".event")
 		.children(".eventTxtArea")
+		.removeClass("unsaved")
 		.val();
 
-	let i = $(this)
+	let index = $(this)
 		.closest(".time-block")
 		.index();
 
-	eventsArr[i].event = eventText;
+	eventsArr[index].event = $eventText;
 
 	// put in local storage
 	let data = JSON.stringify(eventsArr);
